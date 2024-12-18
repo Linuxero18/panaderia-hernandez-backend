@@ -2,7 +2,19 @@ const db = require('../config/connection');
 
 // Obtener todos los pedidos
 const getAllPedidos = async () => {
-    const [rows] = await db.promise().query('SELECT * FROM pedidos');
+    const [rows] = await db.promise().query(`
+    SELECT p.id_pedido,
+        p.id_cliente,
+        c.nombre,
+        p.descripcion,
+        p.precio,
+        p.cantidad,
+        p.total,
+        p.telefono,
+        p.fecha_entrega,
+        p.estado
+    FROM pedidos p
+    INNER JOIN clientes c ON p.id_cliente = c.id_cliente`);
     return rows;
 };
 
